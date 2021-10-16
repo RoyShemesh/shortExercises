@@ -28,11 +28,11 @@ const getPokemonByType= async (type)=>{
     }
 }
 
-const getPokemonByNameFetch=async (pok)=>{
+/* const getPokemonByNameFetch=async (pok)=>{
     try {
         const respone= await fetch(`${baseUrl}pokemon/1`,{            
         }) 
-        console.log((respone.json).results);
+        console.log((respone.json).results  );
     //    return await (respone.json());
     } catch (error) {
         let img =document.getElementById("pokImg");
@@ -44,7 +44,7 @@ const getPokemonByNameFetch=async (pok)=>{
         document.getElementById("info").innerText= `${error}`;    }
 }
 
-
+ */
 
 
 
@@ -92,8 +92,8 @@ function createElement(tagName ,children = [], classes = [], attributes = {}) {
 
 let pokemon;
 const displayPok=async()=>{
-    // pokemon=await getPokemonByName(document.getElementById("inputPoke").value)
-     pokemon=await getPokemonByNameFetch(document.getElementById("inputPoke").value)
+    pokemon=await getPokemonByName(document.getElementById("inputPoke").value)
+    //  pokemon=await getPokemonByNameFetch(document.getElementById("inputPoke").value)
     if(pokemon===undefined)
         throw("hi")
     let p =document.getElementById("info");
