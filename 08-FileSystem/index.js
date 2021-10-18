@@ -1,4 +1,6 @@
 const fs=require("fs")
+
+
 let found=false;
 const findTreasureSync=(roomPath)=> {
     let skelton = fs.readdirSync(roomPath);
@@ -22,7 +24,7 @@ const openChestSync=(chestPath)=> {
             found=true;
             return;
         }
-        // drawMapSync(chestPath);
+        drawMapSync(chestPath);
         clue=clue.clue;
         return (findTreasureSync(clue));
     }
