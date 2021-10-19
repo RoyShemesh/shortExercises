@@ -33,13 +33,13 @@ function openChest(chestPath, cb) {
             if(checkJson(data.toString().trim()))
             { 
                 data=JSON.parse(data.toString().trim());
+                drawMapSync(chestPath);
                 if(data.treasure!== undefined)
                 {
                     drawMapSync("treasure!")
                     console.log("found the treasure!");
                     return;
                 }
-                drawMapSync(chestPath);
                 return (cb(data.clue,openChest));
 
             }
