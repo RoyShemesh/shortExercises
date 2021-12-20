@@ -1,11 +1,13 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { addToCartGeneric } from "../actions";
 import "../app.css";
-const Product = ({ item, removeFunc, addToCart }) => {
+const Product = ({ item, addToCart }) => {
   const dispatch = useDispatch();
   const click = () => {
-    dispatch(removeFunc());
-    dispatch(addToCart());
+    const func = addToCartGeneric();
+    func.payload = { product: item.product, cost: parseInt(item.cost) };
+    dispatch(func);
   };
   return (
     <div className="product">

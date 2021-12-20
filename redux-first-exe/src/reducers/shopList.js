@@ -17,16 +17,11 @@ const list = [
 ];
 const shopList = (state = list, action) => {
   switch (action.type) {
-    case "ADD_ITEM_IPAD": {
-      state[0].quantity -= 1;
-      return [...state];
-    }
-    case "ADD_ITEM_PC": {
-      state[1].quantity -= 1;
-      return [...state];
-    }
-    case "ADD_ITEM_MOBILE": {
-      state[2].quantity -= 1;
+    case "ADD_ITEM": {
+      const item = state.find(
+        (item) => item.product === action.payload.product
+      );
+      item.quantity -= 1;
       return [...state];
     }
     default:
