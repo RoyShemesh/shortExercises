@@ -1,0 +1,11 @@
+.shoplist {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  vertical-align: middle;
+}
+.product {
+  margin: 5px;
+  border: 1px;
+  border-style: solid;
+}
