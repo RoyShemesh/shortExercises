@@ -1,0 +1,113 @@
+1)
+SELECT title, duration
+FROM movies
+WHERE title="Outback"
+
+answer = 86 mins
+
+2)
+SELECT title
+FROM movies
+WHERE director='Peter Sullivan' AND year="2017"
+
+answer = "The Sandman"
+
+3)
+SELECT reviews_from_users,reviews_from_critics
+FROM movies
+WHERE imdb_title_id="tt7336182"
+
+answer = 59
+
+4)
+SELECT m.title,r.Votes_1
+FROM  movies m JOIN ratings r
+ON (m.imdb_title_id =r.imdb_title_id ) 
+WHERE (m.title="Joker")
+
+answer = 10650
+
+5)
+SELECT DISTINCT(production_company)
+FROM  movies 
+
+answer = "2321"
+
+6)
+WITH sugithAndDharmajan (duration,year) AS (
+SELECT duration,year
+FROM movies
+WHERE actors LIKE '%Dharmajan Bolgatty%'
+OR actors LIKE '%Sugith Varughes%'
+)
+
+SELECT AVG(duration)
+FROM  sugithAndDharmajan 
+WHERE year!=2018
+
+answer = 136.0769
+
+7) 
+SELECT title, genre, (worlwide_gross_income_in_USD-budget) AS income
+FROM  movies
+WHERE production_company="DreamWorks"
+ORDER BY income DESC
+
+8)
+WITH linsMovies (title,year,id) AS(
+SELECT title,year,imdb_title_id
+FROM  movies 
+WHERE actors LIKE '%Lin Shaye%'
+)
+
+SELECT title,year,age_18_to_30_avg_vote	
+FROM  linsMovies l JOIN ratings r
+ON (l.id =r.imdb_title_id)
+
+9)
+WITH avgVotes (avgs)AS(
+SELECT AVG(age_0_to_18_avg_vote) FROM ratings
+UNION
+SELECT AVG(age_18_to_30_avg_vote) FROM ratings
+UNION
+SELECT AVG(age_30_to_45_avg_vote) FROM ratings
+UNION
+SELECT AVG(age_45_plus_avg_vote ) FROM ratings
+)
+
+SELECT MIN(avgs)
+FROM avgVotes
+
+answer = 3.3453124999999995
+
+10)
+SELECT DISTINCT genre,AVG(duration) OVER(PARTITION BY genre) as avg
+FROM movies 
+WHERE year>2016
+ORDER BY avg DESC
+LIMIT 3
+
+11)
+SELECT distinct m.year, AVG(r.average_vote) OVER(PARTITION BY m.year) as avgVote
+FROM movies m  JOIN ratings r 
+ON (m.imdb_title_id=r.imdb_title_id)
+WHERE m.language='English'
+ORDER BY avgVote DESC
+
+12)
+SELECT  m.title, ABS(r.females_avg_vote-r.males_avg_vote) AS diffrence,r.males_vote_count,r.females_vote_count 
+FROM movies m  JOIN ratings r 
+ON (m.imdb_title_id=r.imdb_title_id)
+ORDER BY diffrence DESC
+LIMIT 10
+
+13)
+SELECT  title,year
+,director ,AVG(duration) OVER(PARTITION BY director) as avgDurationByDirector,
+production_company ,MIN(year) OVER(PARTITION BY production_company) as firstProductionCompanyMovie
+FROM movies 
+WHERE language='English'
+
+
+
+

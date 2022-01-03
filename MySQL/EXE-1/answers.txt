@@ -1,0 +1,116 @@
+1) 
+SELECT Salary FROM emp
+WHERE EMP_ID=273407
+
+answer = 241
+
+2)
+SELECT first_name FROM emp
+WHERE CITY='Palo alto' AND gender ='F'
+
+answer = Dawne  
+
+3)
+SELECT first_name FROM emp
+ORDER BY year_of_joining , month_of_joining,day_of_joining
+
+answer = Otha
+
+4)
+SELECT * FROM emp
+WHERE first_name='Jack'
+
+answer = 4
+
+5)
+SELECT * FROM emp
+WHERE gender='F' AND first_name Like 'J%' AND age_in_years > 55 AND E_Mail like '%gmail%'
+
+answer = 10
+
+6) 
+SELECT first_name,last_name, age_in_years,county,city FROM emp
+WHERE gender='M' AND first_name Like 'J%' AND age_in_years > 50 AND state='IL'
+
+answer = 3 
+
+7)
+SELECT first_name,last_name,salary,age_in_years,city,county FROM emp
+WHERE salary>100000 AND age_in_years > 50 AND state="NY" AND Fathers_Name LIKE "%j%"
+  
+answer = 4
+
+8)
+SELECT first_name,last_name,salary,age_in_years,city,county,gender FROM emp
+WHERE gender='F' AND last_name LIKE "B%" AND salary>80000 AND age_in_years NOT BETWEEN 30 AND 50 AND state="NY" 
+
+answer = 9
+
+9)
+SELECT first_name,last_name,gender 
+FROM emp
+WHERE first_name=ANY (SELECT DISTINCT first_name FROM emp WHERE gender='M')
+
+answer = 2814
+
+10)
+//include people who earn above 70000$ 
+SELECT first_name ,last_name,gender,age_in_years,salary
+FROM emp
+WHERE last_name=ANY (SELECT last_name FROM emp WHERE salary>70000)
+
+answer = 4653
+
+|| 
+
+//doesn't include people who earn above 70000$ 
+SELECT first_name ,last_name,gender,age_in_years,salary
+FROM emp
+WHERE last_name=ANY (SELECT last_name FROM emp WHERE salary>70000) AND salary<70000
+
+answer = 193
+
+11)
+SELECT first_name ,last_name,gender,age_in_years,salary
+FROM emp
+WHERE last_name=ANY (SELECT last_name FROM emp WHERE years_in_company>5)
+ AND LENGTH(first_name)=5
+
+answer = 827
+
+12)
+SELECT first_name ,last_name,gender,age_in_years,salary,
+CASE 
+WHEN age_in_years<30 THEN 'young'
+WHEN age_in_years>50 THEN 'old'
+ELSE 'adult'
+END AS 'type'
+FROM emp
+
+answer = 10 
+
+13)
+SELECT name_prefix,years_in_company,first_name ,last_name,gender,age_in_years,salary,
+CASE 
+WHEN years_in_company<5 THEN 'young'
+WHEN years_in_company>15 AND Name_Prefix='dr.' THEN 'Specialist'
+WHEN years_in_company>15 THEN 'expert'
+ELSE 'experienced'
+END AS 'type'
+FROM emp
+
+answer = 5417
+
+14)
+SELECT first_name,last_name
+FROM emp
+ORDER BY first_name,last_name
+
+answer = 5417
+
+15)
+SELECT first_name,weight_in_kgs,age_in_years
+FROM emp
+ORDER BY weight_in_kgs ,age_in_years desc
+
+answer = 5417

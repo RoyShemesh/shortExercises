@@ -1,0 +1,59 @@
+1)
+WITH countryEvents (country,events) AS(
+SELECT country, COUNT(DISTINCT event)  
+FROM summer 
+GROUP BY (country)
+)
+
+SELECT * FROM countryEvents
+WHERE events>100
+ORDER BY events DESC
+ 
+||
+
+SELECT country,count(DISTINCT event) as evcn
+FROM summer 
+GROUP BY country
+having evcn > 100
+order by evcn desc
+
+answer = 11
+
+2)
+SELECT Athlete,medal
+FROM summer
+WHERE country = "can" 
+
+answer = 341
+
+3)
+SELECT Athlete,count(medal) as medal,GROUP_CONCAT(event)
+FROM summer 
+GROUP BY Athlete
+ORDER BY medal DESC
+
+4)
+SELECT Sport,event,athlete,country,medal, COUNT(medal) OVER(PARTITION BY athlete) as athleteMedals
+FROM summer
+WHERE city="london"
+
+5)
+WITH countryGold(country) AS(
+SELECT country
+FROM summer
+WHERE medal='Gold'
+AND  discipline ='Boxing'
+AND year ='2008'
+
+UNION
+
+SELECT country
+FROM winter 
+WHERE medal='Gold'
+AND  discipline ='Skiing'
+AND year ='2006'
+)
+
+SELECT c.country,d.Population
+FROM countryGold c JOIN dictionary d
+ON (c.country = d.code)

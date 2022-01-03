@@ -1,0 +1,88 @@
+1)
+SELECT * , MIN(year) OVER(PARTITION BY Athlete) as firstWin
+FROM summer
+
+2)
+WITH athlete (athlete,Discipline) AS (
+SELECT athlete,Discipline
+FROM summer 
+UNION
+SELECT athlete,Discipline
+FROM winter
+)
+
+SELECT athlete,GROUP_CONCAT(Discipline) AS allDispline ,COUNT(Discipline) AS count
+FROM athlete
+GROUP BY athlete
+ORDER BY count DESC
+
+3)
+
+WITH athlete (athlete,Discipline,country) AS (
+SELECT athlete,Discipline,country
+FROM summer 
+UNION
+SELECT athlete,Discipline,country
+FROM winter
+)
+
+SELECT athlete,GROUP_CONCAT(country) AS AllCountries,COUNT(DISTINCT country) AS count
+FROM athlete
+GROUP BY athlete
+HAVING count>1
+ORDER BY count DESC
+
+4)
+WITH athlete (athlete,Discipline,country,medal) AS (
+SELECT athlete,Discipline,country,medal
+FROM summer 
+UNION
+SELECT athlete,Discipline,country,medal
+FROM winter
+),
+
+countriesPop (country,population,countMedals) AS (
+SELECT DISTINCT d.country ,d.population,
+COUNT(a.medal) OVER(PARTITION BY a.country) as countMedals
+FROM athlete a JOIN dictionary d
+ON (a.Country= d.Code)
+ORDER BY countMedals DESC
+)
+
+SELECT country,population,countMedals,(population/countMedals) AS ratio
+FROM countriesPop 
+ORDER BY ratio DESC
+LIMIT 15
+
+5)
+WITH score AS ( 
+SELECT COUNT(medal)*100 AS score,country
+FROM summer 
+WHERE medal='Gold' AND city ="barcelona"
+GROUP BY country
+UNION
+SELECT COUNT(medal)*50 AS score,country
+FROM summer 
+WHERE medal='Silver' AND city ="barcelona"
+GROUP BY country
+UNION
+SELECT COUNT(medal)*30 AS score,country
+FROM summer 
+WHERE medal='Bronze' AND city ="barcelona"
+GROUP BY country
+),
+totalScore AS (
+SELECT DISTINCT country, SUM(score) OVER(PARTITION BY country) as totalScore
+FROM score
+ORDER BY totalScore DESC
+),
+totalCount (totalCount,country) AS(
+SELECT COUNT(medal),country
+FROM summer 
+WHERE city="barcelona"
+GROUP BY country
+)
+
+SELECT s.country, (s.totalScore*c.totalCount)
+FROM totalScore s JOIN totalCount c
+ON (s.country=c.country)
