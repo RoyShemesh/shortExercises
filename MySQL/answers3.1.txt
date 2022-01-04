@@ -1,0 +1,51 @@
+CREATE TABLE institute:
+
+//  Coach TABLE : 
+
+CREATE TABLE Coach (
+id INT,
+name VARCHAR(30),
+mail VARCHAR(30),
+phone VARCHAR(30),
+from_date DATE,
+hourly_date DOUBLE,
+institute VARCHAR(30),
+PRIMARY KEY (id)
+)
+
+//  Types TABLE
+
+CREATE TABLE Types(
+type_name CHAR,
+description TEXT,
+PRIMARY KEY(type_name) 
+)
+
+//Coaches TABLE
+
+CREATE TABLE Coaches(
+type_name CHAR,
+coach_id INT,
+FOREIGN KEY (type_name) REFERENCES Types(type_name)
+ON UPDATE CASCADE,
+FOREIGN KEY (coach_id) REFERENCES Coach(id)
+ON UPDATE CASCADE
+)
+
+//  Clients TABLE
+
+CREATE TABLE Clients(
+c_id INT,
+name VARCHAR(30),
+address VARCHAR(30),
+phone INT,
+PRIMARY KEY(c_id)
+)
+
+
+4)
+SELECT cl.c_id,cl.name,(t.hours*co.hourly_rate) as shouldPay
+FROM Training_sequence t JOIN Coach co
+ON (t.coach_id=co.id)
+JOIN Clients cl
+ON (t.c_id=cl.c_id)

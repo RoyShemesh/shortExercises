@@ -1,0 +1,76 @@
+CREATE SCHEMA Disasters
+
+//  Event TABLE
+
+CREATE TABLE Event (
+etype VARCHAR(300),
+description TEXT,
+PRIMARY KEY(etype)
+)
+
+//  City TABLE
+
+CREATE TABLE City (
+cname VARCHAR(30),
+country VARCHAR(30),
+population INT,
+PRIMARY KEY (cname)
+)
+
+//Disaster TABLE
+
+CREATE TABLE Disaster(
+cname VARCHAR(30),
+year INT,
+etype VARCHAR(300),
+casualties INT,
+PRIMARY KEY (year,cname),
+FOREIGN KEY (etype) REFERENCES Event(etype)
+ON UPDATE CASCADE
+)
+
+//  Prediction TABLE
+
+CREATE TABLE Prediction(
+cname VARCHAR(30),
+etype VARCHAR(300),
+casualties INT,
+PRIMARY KEY (etype,cname)
+)
+
+//  Measures TABLE
+
+CREATE TABLE Measures(
+provider VARCHAR(30),
+etype VARCHAR(300),
+cost INT,
+percent DECIMAL,
+PRIMARY KEY (etype,provider)
+)
+
+3)
+
+SELECT COUNT(year) as totalDis,cname
+FROM Disaster
+WHERE year>1972
+GROUP BY cname
+ORDER BY totalDis DESC
+LIMIT 1
+
+answer = Pasto 6
+
+4)
+
+CREATE VIEW Safety_rank AS 
+WITH totalPredication AS (
+SELECT SUM(casualties) as total_casualties, cname
+FROM Prediction 
+GROUP BY cname
+)
+
+SELECT c.*, p.total_casualties,(p.total_casualties/c.population) AS ratio
+FROM totalPredication p JOIN City c
+ON (p.cname=c.cname)
+ORDER BY ratio DESC
+
+answer = Tsfat
