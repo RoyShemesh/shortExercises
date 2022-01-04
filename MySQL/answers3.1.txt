@@ -42,6 +42,18 @@ phone INT,
 PRIMARY KEY(c_id)
 )
 
+//  Training_sequence TABLE
+
+CREATE TABLE Training_sequence(
+start_date DATE,
+c_id INT,
+coach_id INT,
+type_name CHAR,
+hours INT,
+PRIMARY KEY(start_date),
+FOREIGN KEY (c_id) REFERENCES Clients(c_id)
+ON UPDATE CASCADE
+)
 
 4)
 SELECT cl.c_id,cl.name,(t.hours*co.hourly_rate) as shouldPay
