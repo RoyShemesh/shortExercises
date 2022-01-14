@@ -15,13 +15,21 @@ User.init(
       type: DataTypes.STRING,
       unique: true,
       allowNull: false,
-      validate: {
-        isEmail: true,
-      },
+      // validate: {
+      //   isEmail: true,
+      // },
     },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    admin: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    disabled: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
     },
   },
   {
@@ -31,6 +39,15 @@ User.init(
     modelName: "user",
     createdAt: true,
     updatedAt: true,
+    //   defaultScope: {
+    //     where: {
+    //       disabled: false,
+    //     },
+    //   },
+    //   scopes: {
+    //     admin: { where: { admin: true } },
+    //     disabled: { where: { disabled: true } },
+    //   },
   }
 );
 

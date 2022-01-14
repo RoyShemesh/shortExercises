@@ -12,7 +12,6 @@ router.get("/", async (req, res) => {
         [sequelize.fn("SUM", sequelize.col("likes")), "totalLikes"],
       ],
       group: "author",
-      //   order: sequelize.literal("totalLikes DESC"),
     });
     res.send(authors);
   } catch (error) {

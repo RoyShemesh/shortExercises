@@ -27,12 +27,24 @@ Blog.init(
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    year: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        min: {
+          args: 1991,
+          msg: "Year must be greater than 1991",
+        },
+      },
+    },
   },
   {
     sequelize,
     underscored: true,
     timestamps: false,
     modelName: "blogs",
+    createdAt: true,
+    updatedAt: true,
   }
 );
 module.exports = Blog;

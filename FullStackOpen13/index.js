@@ -5,6 +5,7 @@ const authorRoute = require("./controllers/authorController");
 const blogRouter = require("./controllers/blogController");
 const userRouter = require("./controllers/userController");
 const loginRouter = require("./controllers/loginController");
+const readinglistsRouter = require("./controllers/readinglistsController");
 const PORT = process.env.PORT || 3001;
 const { connectToDatabase } = require("./util/db");
 app.use(express.json());
@@ -13,6 +14,7 @@ app.use("/api/blogs", blogRouter);
 app.use("/api/users", userRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/authors", authorRoute);
+app.use("/api/readinglists", readinglistsRouter);
 
 const start = async () => {
   await connectToDatabase();
